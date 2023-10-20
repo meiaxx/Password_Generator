@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generador de Contraseñas Seguras</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Generador de Contraseñas Seguras</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="mt-4">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form class="mt-4" method="POST" action="/generate_password">
+            <div class="form-group">
+                <label for="length">Longitud de la contraseña:</label>
+                <input type="number" class="form-control" name="length" min="8" max="128" value="12" required>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="lowercase">
+                <label class="form-check-label">Incluir minúsculas</label>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="uppercase">
+                <label class="form-check-label">Incluir mayúsculas</label>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="digits">
+                <label class="form-check-label">Incluir números</label>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="special_chars">
+                <label class="form-check-label">Incluir caracteres especiales</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Generar Contraseña</button>
+        </form>
+
+        <button id="copy-password" class="btn btn-primary mt-3">Copiar Contraseña</button>
+
+
+        <div class="mt-4" id="password"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
+
